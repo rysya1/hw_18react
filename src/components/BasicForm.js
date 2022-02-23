@@ -26,31 +26,30 @@ const BasicForm = (props) => {
 	}
 	const enteredNameIsValid = enteredFirst.trim() !== ''
 	const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched
-	let formIsValid = false
-	if (enteredNameIsValid) {
-		formIsValid = true
-	}
+
 	const enteredNameIsValid2 = enteredList.trim() !== ''
 	const nameInputIsInvalid2 = !enteredNameIsValid2 && enteredNameTouched2
-  let formIsValid2 = false
-	if (enteredNameIsValid2) {
-		formIsValid2 = true
-	}
+
 	const enteredNameIsValid3 = enteredEmail.trim() !== ''
 	const nameInputIsInvalid3 = !enteredNameIsValid3 && enteredNameTouched3
-  let formIsValid3 = false
-	if (enteredNameIsValid3) {
-		formIsValid3 = true
+
+	let formIsValid = false
+	if (enteredNameIsValid && enteredNameIsValid2 && enteredNameIsValid3) {
+		formIsValid = true
 	}
+
 	const formSubmitHandler = (e) => {
 		e.preventDefault()
 		setEnteredNameTouched(true)
 		setEnteredNameTouched2(true)
 		setEnteredNameTouched3(true)
+		if (!enteredNameIsValid) return
+		if (!enteredNameIsValid2) return
+		if (!enteredNameIsValid3) return
 		setEnteredFirst('')
 		setEnteredList('')
 		setEnteredEmail('')
-    setEnteredNameTouched(false)
+		setEnteredNameTouched(false)
 		setEnteredNameTouched2(false)
 		setEnteredNameTouched3(false)
 	}
@@ -91,7 +90,7 @@ const BasicForm = (props) => {
 				<div className={nameInputClasses3}>
 					<label htmlFor='name'>E-Mail Address</label>
 					<input
-            value={enteredEmail}
+						value={enteredEmail}
 						type='text'
 						id='name'
 						onChange={emailAddressHandler}
@@ -102,7 +101,7 @@ const BasicForm = (props) => {
 			</div>
 
 			<div className='form-actions'>
-				<button disabled={!formIsValid} disabled={!formIsValid2} disabled={!formIsValid3}>Submit</button>
+				<button disabled={!formIsValid}>Submit</button>
 			</div>
 		</form>
 	)
