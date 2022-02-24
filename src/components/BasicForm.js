@@ -30,8 +30,9 @@ const BasicForm = (props) => {
 	const enteredNameIsValid2 = enteredList.trim() !== ''
 	const nameInputIsInvalid2 = !enteredNameIsValid2 && enteredNameTouched2
 
-	const enteredNameIsValid3 = enteredEmail.trim() !== ''
-	const nameInputIsInvalid3 = !enteredNameIsValid3 && enteredNameTouched3
+	const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,)
+	const enteredNameIsValid3 = enteredEmail.trim() !== '' && enteredNameTouched3 && validEmailRegex.test(enteredEmail)
+	const nameInputIsInvalid3 = !enteredNameIsValid3 && enteredNameTouched3 
 
 	let formIsValid = false
 	if (enteredNameIsValid && enteredNameIsValid2 && enteredNameIsValid3) {
@@ -43,9 +44,6 @@ const BasicForm = (props) => {
 		setEnteredNameTouched(true)
 		setEnteredNameTouched2(true)
 		setEnteredNameTouched3(true)
-		if (!enteredNameIsValid) return
-		if (!enteredNameIsValid2) return
-		if (!enteredNameIsValid3) return
 		setEnteredFirst('')
 		setEnteredList('')
 		setEnteredEmail('')
@@ -96,10 +94,9 @@ const BasicForm = (props) => {
 						onChange={emailAddressHandler}
 						onBlur={emailInputBlurHandler}
 					/>
-					{nameInputIsInvalid3 && <p>Name must not be empty</p>}
+					{ nameInputIsInvalid3 && enteredEmail.length === 0 ? <p>Gmail must not be empty</p> : nameInputIsInvalid3 ? <p>Gmail is not valid</p> :   ''}
 				</div>
 			</div>
-
 			<div className='form-actions'>
 				<button disabled={!formIsValid}>Submit</button>
 			</div>
